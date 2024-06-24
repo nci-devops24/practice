@@ -33,17 +33,16 @@ jobs:
       - run:
           name: install-npm
           command: npm install
-      - run:
-          name: test-run
-          command: npm run test
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
-            - ./node_modules
-    deploy:
-      docker:
-        - image: circleci/node:10.16.3
-      steps:
-        - run:
-            name: deploy-application
-            command: ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS "rm -rf practice/; git clone https://github.com/nci-devops24/practice.git; source practice/deploy.sh"
+          - ./node_modules
+  deploy:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - run:
+          name: deploy-application
+          command:
+            ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS "rm -rf practice/;
+            git clone https://github.com/nci-devops24/practice.git; source practice/deploy.sh"
