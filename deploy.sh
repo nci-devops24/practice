@@ -9,5 +9,7 @@ pm2 stop practiceApp
 cd practice/
 # Install dependencies listed inside /package.json file
 npm install
+echo $PRIVATE_KEY > privatekey.pem
+echo $SERVER > server.crt
 # Start the application with the process name practiceApp using pm2
 pm2 start ./bin/www --name practiceApp
